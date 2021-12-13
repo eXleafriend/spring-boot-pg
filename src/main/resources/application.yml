@@ -1,0 +1,17 @@
+message: null
+---
+spring:
+  profiles: default
+message: default profile message
+---
+spring:
+  profiles: local
+message: local profile message
+---
+spring:
+  profiles: test
+message: test profile message
+---
+spring:
+  profiles: local & testx
+message: local, test profile message
