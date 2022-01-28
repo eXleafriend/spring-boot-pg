@@ -12,7 +12,6 @@ import javax.validation.Validator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -33,10 +32,6 @@ public class GroupControllerTest {
 		validator = factory.getValidator();
 
 		objectMapper = new ObjectMapper();
-
-		final var module = new SimpleModule();
-		module.addDeserializer(GroupController.Group.class, new GroupController.Deserializer());
-		objectMapper.registerModule(module);
 	}
 
 	private String $(final Object value) throws JsonProcessingException {
