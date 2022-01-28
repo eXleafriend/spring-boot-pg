@@ -6,21 +6,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import java.io.IOException;
-
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.node.TextNode;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -43,44 +35,7 @@ public class GroupControllerTest {
 		objectMapper = new ObjectMapper();
 
 		final var module = new SimpleModule();
-		module.addDeserializer(GroupController.Group.class, new StdDeserializer<GroupController.Group>(String.class) {
-
-			private String getString(final JsonNode node) {
-				if (node instanceof TextNode textNode) {
-					return textNode.textValue();
-				}
-				return null;
-			}
-
-			@Override
-			public GroupController.Group deserialize(final JsonParser jp, final DeserializationContext context)
-					throws IOException, JacksonException {
-
-				final JsonNode node = jp.getCodec().readTree(jp);
-
-				final var idNode = node.get("id");
-				final var id = getString(idNode);
-
-				final var nameNode = node.get("name");
-				final var name = getString(nameNode);
-				// final var name = nameNode == null || nameNode instanceof NullNode ? null : nameNode.asText();
-
-				if (nameNode != null) {
-					return new GroupController.Group(id, name);
-				} else {
-					return new GroupController.Group(id);
-				}
-
-
-			}
-
-			@Override
-			public GroupController.Group getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-				// TODO Auto-generated method stub
-				return super.getNullValue(ctxt);
-			}
-
-		});
+		module.addDeserializer(GroupController.Group.class, new GroupController.Deserializer());
 		objectMapper.registerModule(module);
 	}
 
