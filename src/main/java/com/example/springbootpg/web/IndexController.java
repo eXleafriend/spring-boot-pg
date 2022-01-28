@@ -1,7 +1,6 @@
 package com.example.springbootpg.web;
 
 import java.util.Date;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +11,12 @@ public class IndexController {
 
 	@GetMapping
 	@ResponseBody
-	public Map<String, Object> index() {
-		return Map.of("epochTime", new Date().getTime());
+	public Response<EpochTime> index() {
+		final var data = new EpochTime(new Date().getTime());
+		return new Response<>(data);
+	}
+
+	public static record EpochTime(long epochTime) {
 	}
 
 }
