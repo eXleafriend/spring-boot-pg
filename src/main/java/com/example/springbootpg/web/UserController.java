@@ -1,10 +1,21 @@
 package com.example.springbootpg.web;
 
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import com.example.springbootpg.web.response.DataResponse;
+import com.example.springbootpg.web.response.Error;
+import com.example.springbootpg.web.response.ErrorResponse;
+import com.example.springbootpg.web.response.Response;
+import com.example.springbootpg.web.response.Warning;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +53,7 @@ public class UserController {
 				  "username": "leafriend"
 				}
 				""");
-		return new Response<>(userRecord);
+		return new DataResponse<>(userRecord);
 	}
 
 	@PostMapping("/dto")
@@ -55,7 +66,31 @@ public class UserController {
 				  "email": "leafriend"
 				}
 				""");
-		return new Response<>(userDto);
+		return new DataResponse<>(userDto);
+	}
+
+	@PostMapping()
+	@ResponseBody
+	public Response<UserDto> register(@Valid @RequestBody final UserDto userDto, final BindingResult bindingResult) {
+		$("""
+				cat | http -v POST localhost:8080/user
+				{
+				  "name": "leafriend",
+				  "email": "leafriend"
+				}
+				""");
+		final var warnings = ((Supplier<List<Warning<?>>>)( () -> {
+			if (userDto.getEmail() == null) {
+				return List.of(new Warning<>("E007", "Null email is danger", null));
+			} else {
+				return null;
+			}
+		})).get();
+		if (bindingResult.hasErrors()) {
+			final var errors = bindingResult.getAllErrors().stream().map(error -> new Error<>("H400", "Bad Request", error)).collect(Collectors.toList());
+			return new ErrorResponse<UserDto>(errors, warnings);
+		}
+		return new DataResponse<>(userDto, warnings);
 	}
 
 }

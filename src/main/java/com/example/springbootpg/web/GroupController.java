@@ -6,6 +6,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.example.springbootpg.web.response.DataResponse;
+import com.example.springbootpg.web.response.Response;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -88,7 +90,7 @@ public class GroupController {
 	@PostMapping
 	@ResponseBody
 	public Response<Group> register(@Valid @RequestBody final Group group) {
-		return new Response<>(group);
+		return new DataResponse<>(group);
 	}
 
 }
