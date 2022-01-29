@@ -73,11 +73,11 @@ public class UserController {
 	@ResponseBody
 	public Response<UserDto> register(@Valid @RequestBody final UserDto userDto, final BindingResult bindingResult) {
 		$("""
-				cat | http -v POST localhost:8080/user
-				{
-				  "name": "leafriend",
-				  "email": "leafriend"
-				}
+				echo '{}' | http -v POST localhost:8080/user
+				http -v POST localhost:8080/user username=leafriend
+				http -v POST localhost:8080/user name=leafriend
+				http -v POST localhost:8080/user name=leafriend email=leafriend
+				http -v POST localhost:8080/user name=leafriend email=leafriend@gmail.com
 				""");
 		final var warnings = ((Supplier<List<Warning<?>>>)( () -> {
 			if (userDto.getEmail() == null) {
