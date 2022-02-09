@@ -17,9 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@Slf4j
 public class EmbeddedKafkaIntegrationTest {
 
 	@Autowired
@@ -46,7 +49,10 @@ public class EmbeddedKafkaIntegrationTest {
 		// producer.send(topic, "Sending with own simple KafkaProducer");
 		final var request = new StorageRequest("warpcms", "TN-00001");
 		producer.send(topic, request);
-		consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
+		final var start = System.currentTimeMillis();
+		consumer.getLatch().await(100000, TimeUnit.MILLISECONDS);
+		final var end = System.currentTimeMillis();
+		log.info("Time taken: {}s", (end - start) / 1000.0);
 
 		assertThat(consumer.getLatch().getCount(), equalTo(0L));
 		assertThat(consumer.getPayload(), containsString("embedded-test-topic"));
