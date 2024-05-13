@@ -1,5 +1,6 @@
 package com.example.springbootpg;
 
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,24 @@ public class OpenApiConfig {
 				.version("0.1");
 		return new OpenAPI()
 				.info(info);
+	}
+
+	@Bean
+	public GroupedOpenApi v1() {
+		String pathsToMatch[] = { "/v1/**" };
+		return GroupedOpenApi.builder()
+				.group("v1")
+				.pathsToMatch(pathsToMatch)
+				.build();
+	}
+
+	@Bean
+	public GroupedOpenApi v2() {
+		String pathsToMatch[] = { "/v2/**" };
+		return GroupedOpenApi.builder()
+				.group("v2")
+				.pathsToMatch(pathsToMatch)
+				.build();
 	}
 
 }
