@@ -1,17 +1,25 @@
 message: null
 ---
 spring:
-  profiles: default
+  config:
+    activate:
+      on-profile: default
 message: default profile message
 ---
 spring:
-  profiles: local
+  config:
+    activate:
+      on-profile: local
 message: local profile message
 ---
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
 message: test profile message
 ---
 spring:
-  profiles: local & testx
+  config:
+    activate:
+      on-profile: local & testx
 message: local, test profile message
