@@ -12,6 +12,7 @@ public class PathPrefixConfig implements WebMvcConfigurer {
 	@Override
 	public void configurePathMatch(@NonNull PathMatchConfigurer configurer) {
 		configurer.addPathPrefix("/v1", HandlerTypePredicate.forBasePackage("com.example.springbootpg.v1.web"));
+		configurer.addPathPrefix("/v2", HandlerTypePredicate.forBasePackage("com.example.springbootpg.v2"));
 	}
 
 }
