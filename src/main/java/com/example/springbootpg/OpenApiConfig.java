@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.info.Info;
 public class OpenApiConfig {
 
 	@Bean
-	public OpenAPI springShopOpenAPI() {
+	OpenAPI springShopOpenAPI() {
 		final var info = new Info()
 				.title("OpenAPI Example")
 				.description("""
@@ -23,7 +23,7 @@ public class OpenApiConfig {
 	}
 
 	@Bean
-	public GroupedOpenApi v1() {
+	GroupedOpenApi v1() {
 		String pathsToMatch[] = { "/v1/**" };
 		return GroupedOpenApi.builder()
 				.group("v1")
@@ -32,7 +32,7 @@ public class OpenApiConfig {
 	}
 
 	@Bean
-	public GroupedOpenApi v2() {
+	GroupedOpenApi v2() {
 		String pathsToMatch[] = { "/v2/**" };
 		return GroupedOpenApi.builder()
 				.group("v2")
