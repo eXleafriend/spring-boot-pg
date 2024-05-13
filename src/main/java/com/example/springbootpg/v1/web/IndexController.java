@@ -1,4 +1,4 @@
-package com.example.springbootpg.web;
+package com.example.springbootpg.v1.web;
 
 import java.util.Date;
 import java.util.Map;
