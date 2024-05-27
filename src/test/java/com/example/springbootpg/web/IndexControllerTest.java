@@ -18,12 +18,14 @@ public class IndexControllerTest {
 		Thread.sleep(1);
 
 		// Act
-		final var map = controller.index();
+		final var model = controller.index();
+		final var result = model.getContent();
 
 		// Assert
 		Thread.sleep(1);
 		final var after = System.currentTimeMillis();
-		final var epochTime = (Long) map.get("epochTime");
+		@SuppressWarnings("null")
+		final var epochTime = result.getEpochTime();
 		assertThat(epochTime, allOf(greaterThan(before), lessThan(after)));
 
 	}
