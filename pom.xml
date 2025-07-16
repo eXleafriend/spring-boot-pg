@@ -9,7 +9,7 @@
 		<version>3.2.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.leafriend.ex</groupId>
 	<artifactId>spring-boot-pg</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-pg</name>
