@@ -7,10 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 // JPA
@@ -18,13 +16,12 @@ import lombok.RequiredArgsConstructor;
 // Lombok
 @AllArgsConstructor
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @RequiredArgsConstructor
 public class Author {
 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
-	private final Long id = null;
+	private final Long id;
 
 	@Column(nullable = false)
 	private final Date registeredAt = new Date();
@@ -34,5 +31,22 @@ public class Author {
 
 	@Column(nullable = false)
 	private String name;
+
+	protected Author() {
+		this.id = null;
+		this.username = null;
+	}
+
+	public Author(final Long id) {
+		this.id = id;
+		this.username = null;
+		this.name = null;
+	}
+
+	public Author(final String username, final String name) {
+		this.id = null;
+		this.username = username;
+		this.name = name;
+	}
 
 }

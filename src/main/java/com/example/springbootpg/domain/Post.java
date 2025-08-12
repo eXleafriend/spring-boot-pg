@@ -9,12 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // JPA
 @Entity
 // Lombok
+@AllArgsConstructor
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class Post {
