@@ -7,12 +7,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 // JPA
 @Entity
+@Table(uniqueConstraints = {
+		@UniqueConstraint(name = "uk_author_username", columnNames = "username"),
+})
 // Lombok
 @AllArgsConstructor
 @Data
@@ -26,7 +31,7 @@ public class Author {
 	@Column(nullable = false)
 	private final Date registeredAt = new Date();
 
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private final String username;
 
 	@Column(nullable = false)
