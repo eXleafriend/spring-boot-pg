@@ -1,5 +1,7 @@
 package com.example.springbootpg.web;
 
+import static com.example.springbootpg.utils.StringUtils.escapeLike;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -36,11 +38,11 @@ public class PostSpec implements Specification<Post> {
 		var predicate = cb.conjunction();
 
 		if (title != null && !title.isEmpty()) {
-			predicate = cb.and(predicate, cb.like(root.get("title"), "%" + title + "%"));
+			predicate = cb.and(predicate, cb.like(root.get("title"), "%" + escapeLike(title) + "%"));
 		}
 
 		if (authorName != null && !authorName.isEmpty()) {
-			predicate = cb.and(predicate, cb.like(root.get("author").get("name"), "%" + authorName + "%"));
+			predicate = cb.and(predicate, cb.like(root.get("author").get("name"), "%" + escapeLike(authorName) + "%"));
 		}
 
 		return predicate;
