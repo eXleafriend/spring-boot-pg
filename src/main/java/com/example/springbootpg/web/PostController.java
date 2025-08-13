@@ -1,5 +1,6 @@
 package com.example.springbootpg.web;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -28,7 +29,9 @@ public class PostController {
 	private final PostRepo postRepo;
 
 	@GetMapping("")
-	public Page<Post> listPosts(@ModelAttribute final PostSpec spec, @PageableDefault(10) final Pageable pageable) {
+	public Page<Post> listPosts(
+			@ParameterObject @ModelAttribute final PostSpec spec,
+			@ParameterObject @PageableDefault(10) final Pageable pageable) {
 
 		final var page = postRepo.findAll(spec, pageable);
 		return page;
