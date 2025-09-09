@@ -7,13 +7,15 @@ import static org.hamcrest.Matchers.lessThan;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.springbootpg.ArithmeticService;
+
 public class IndexControllerTest {
 
 	@Test
 	void testIndex() throws InterruptedException {
 
 		// Arrange
-		final var controller = new IndexController();
+		final var controller = new IndexController(new ArithmeticService());
 		final var before = System.currentTimeMillis();
 		Thread.sleep(1);
 
