@@ -12,7 +12,6 @@ import com.example.springbootpg.ArithmeticService;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RestController
 @RequiredArgsConstructor
 public class IndexController {
@@ -29,6 +28,5 @@ public class IndexController {
 	public Map<String, Integer> sum(@RequestParam(required = false) List<Integer> operands) {
 		return Map.of("result", arithmeticService.sum(operands));
 	}
-
 
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class LogAroundComponent {
+public class ComponentMethodExecutionLogger {
 
 	@Around("execution(* com.example.springbootpg..*.*(..))")
-	public Object printCurrentTime(ProceedingJoinPoint jp) throws Throwable {
+	public Object logMethodExecution(ProceedingJoinPoint jp) throws Throwable {
 
 		if (jp.getSignature() instanceof MethodSignature method) {
 
